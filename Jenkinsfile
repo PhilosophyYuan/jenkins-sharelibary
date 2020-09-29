@@ -1,3 +1,5 @@
+@Library('jenkins-sharelibary') _
+def build = new devops.org.build()
 String buildShell = "${env.buildShell}"
 
 pipeline{
