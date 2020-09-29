@@ -13,7 +13,7 @@ pipeline{
                 }
             }
         }
-        stage("antbuild"){
+        /*stage("antbuild"){
             steps("antBuild"){
                 script{
                     try{
@@ -30,6 +30,6 @@ pipeline{
                     build.Build(buildType,buildShell)
                 }
             }
-        }
+        }*/
     }
 }
