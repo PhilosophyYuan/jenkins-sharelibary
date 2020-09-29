@@ -8,7 +8,7 @@ pipeline{
         stage("build"){
             steps("maven version"){
                 script{
-                    build.build
+                    build.Build(buildType,buildShell)
                 }
             }
         }
@@ -16,8 +16,7 @@ pipeline{
             steps("antBuild"){
                 script{
                     try{
-                    antHome = tool "ANT"
-                    sh "${antHome}/bin/ant ${buildShell}"
+                    build.Build(buildType,buildShell)
                     } catch(e){
                         println(e)
                     }
@@ -27,8 +26,7 @@ pipeline{
         stage("Gradle Build"){
             steps("Gradle Build"){
                 script{
-                    gradleHome = tool "GRADLE"
-                    sh "${gradleHome}/bin/gradle ${buildShell}"
+                    build.Build(buildType,buildShell)
                 }
             }
         }
