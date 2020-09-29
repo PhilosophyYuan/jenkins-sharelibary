@@ -1,51 +1,35 @@
-#!groovy
-@Library('jenkins-sharelibary') _
-def tools = new org.devops.tools()
+String buildShell = "${env.buildShell}"
 
-
-pipeline {
-    agent { node {label "node1"}}
-    parameters { string(name: 'DEPLOY_ENV',defaultValue:'string',description:'nishishabi')}
+pipeline{
+    agent {node {label "node1"}}
     stages{
-        stage("No.1"){
-            steps{
-                echo "Hello World"
-                input id: 'Test', message: '是否继续?', ok: '是', parameters: [choice(choices: ['a', 'b'], description: '', name: 'test')], submitter: 'admin'
-            }
-        }
-        stage("No.2"){
-            steps{
+        stage("build"){
+            steps("maven version"){
                 script{
-                    println("shabi")
-                    println("${dzy}")
-                    tools.PrintMes("this is my libary")
+                    mvnHome= tool "M2"
+                    sh "${mvnHome}/bin/mvn ${buildShell}"
+                }
             }
         }
-    }
-        stage("bingxing"){
-            failFast true
-            parallel{
-                stage("No.1"){
-                    steps{
-                        echo "Hello World"
-                    }
-                }
-                stage("No.2"){
-                    steps{
-                        script{
-                            println("shabi")
-                            println("${dzy}")
-                        }
+        stage("antbuild"){
+            steps("antBuild"){
+                script{
+                    try{
+                    antHome = tool "ANT"
+                    sh "${antHome}/bin/ant ${buildShell}"
+                    } catch(e){
+                        println(e)
                     }
                 }
             }
         }
-    }
-    post{
-        always {
-            script{
-                println("always")
+        stage("Gradle Build"){
+            steps("Gradle Build"){
+                script{
+                    gradleHome = tool "GRADLE"
+                    sh "${gradleHome}/bin/gradle ${buildShell}"
                 }
             }
         }
     }
+}
