@@ -1,6 +1,7 @@
 @Library('jenkins-sharelibary') _
 def build = new org.devops.build()
 String buildShell = "${env.buildShell}"
+String buildType = "${env.buildType}"
 
 pipeline{
     agent {node {label "node1"}}
