@@ -1,4 +1,4 @@
-@Library('jenkins-sharelibary') _
+@Library('jenkins-sharelibary@master') _
 def build = new org.devops.build()
 String buildShell = "${env.buildShell}"
 String buildType = "${env.buildType}"
