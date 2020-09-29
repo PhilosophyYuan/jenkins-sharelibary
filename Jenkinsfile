@@ -1,5 +1,5 @@
 @Library('jenkins-sharelibary') _
-def build = new devops.org.build()
+def build = new org.devops.build()
 String buildShell = "${env.buildShell}"
 
 pipeline{
@@ -8,8 +8,7 @@ pipeline{
         stage("build"){
             steps("maven version"){
                 script{
-                    mvnHome= tool "M2"
-                    sh "${mvnHome}/bin/mvn ${buildShell}"
+                    build.build
                 }
             }
         }
