@@ -4,6 +4,8 @@ def deploy = new org.devops.deploy()
 String buildShell = "${env.buildShell}"
 String buildType = "${env.buildType}"
 String deployHost = "${env.deployHost}"
+String branchName= "${branchName}"
+String srcUrl = "${srcUrl}"
 
 pipeline{
     agent {node {label "node1"}}
@@ -11,8 +13,15 @@ pipeline{
         stage("build"){
             steps("maven version"){
                 script{
-                    build.Build(buildType,buildShell)
+                    checkout([$class: 'GitSCM', branches: [[name: "${branchName}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'gitlab', url: "${srcUrl}"]]])
                     deploy.ansibleDeploy("${deployHost}","-m ping")
+                }
+            }
+        }
+        stage("Build"){
+            steps{
+                script{
+                    build.Build(buildType,buildShell)
                 }
             }
         }
