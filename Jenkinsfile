@@ -1,5 +1,6 @@
 @Library('jenkins-sharelibary@master') _
 def build = new org.devops.build()
+def deploy = new org.devops.deploy
 String buildShell = "${env.buildShell}"
 String buildType = "${env.buildType}"
 
