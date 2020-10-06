@@ -1,6 +1,7 @@
 @Library('jenkins-sharelibary@master') _
 def build = new org.devops.build()
-def deploy = new org.devops.deploy
+def deploy = new org.devops.deploy()
+String deployHost = "$(env.deployHost)"
 String buildShell = "${env.buildShell}"
 String buildType = "${env.buildType}"
 
@@ -11,6 +12,7 @@ pipeline{
             steps("maven version"){
                 script{
                     build.Build(buildType,buildShell)
+                    deploy.ansibleDeploy("${deployHost}","-m ping")
                 }
             }
         }
