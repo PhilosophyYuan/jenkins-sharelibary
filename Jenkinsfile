@@ -1,9 +1,9 @@
 @Library('jenkins-sharelibary@master') _
 def build = new org.devops.build()
 def deploy = new org.devops.deploy()
-String deployHost = "$(env.deployHost)"
 String buildShell = "${env.buildShell}"
 String buildType = "${env.buildType}"
+String deployHost = "${env.deployHost}"
 
 pipeline{
     agent {node {label "node1"}}
